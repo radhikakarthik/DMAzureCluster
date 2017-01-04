@@ -1,0 +1,54 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+  "location": {
+    "value": "westus"
+  },
+  "adminUsername": {
+    "value": "azureuser"
+  },
+  "authenticationType": {
+    "value": "password"
+  },
+  "adminPassword": {
+    "value": "Cjl666666AZURE"
+  },
+  "vnetResourceGroup": {
+    "value": "ChrisExisting"
+  },
+  "vnetName": {
+    "value": "chris_vnet"
+  },
+  "vnetNewOrExisting": {
+    "value": "existing"
+  },
+  "vmSubnetName": {
+    "value": "default"
+  },
+  "vmSubnetAddressSpace": {
+    "value": "10.1.0.0/24"
+  },
+  "vmSubnetStartAddress": {
+    "value": "10.1.0.4"
+  },
+  "existingNSGName": {
+    "value": "UDA_SMJT_NSG"
+  },
+  "nsgResourceGroup": {
+    "value": "UDA_SMJT_RG"
+  },
+  "smSystemCount": {
+    "value": 2
+  },
+  "smSiteID": {
+    "value": "AZRTEST"
+  },
+  "smAdminPassword": {
+    "value": "admin1"
+  },
+  "smRESTPassword": {
+    "value": "admin1"
+  }
+  }
+}
