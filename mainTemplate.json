@@ -195,7 +195,7 @@
 		"defaultDatamoverUrl_2":"[concat(variables('baseUrl'),'datamoverMA-Yes'.json')]",
 		"defaultDatamoverUrl_3":"[concat(variables('baseUrl'),'datamoverMA-Yes'.json')]",		
 		"templateUrlDatamover":"[variables(concat('defaultDatamoverUrl_',parameters('dmAgentNodeCount')))]",
-                imagePublisherDM":"teradata",
+                "imagePublisherDM":"teradata",
 		"imageOfferDM":"teradatadatamoverdec21-preview",
 		"imageSkuDM":"teradatadatamoverdec21",
 		"imageOfferAgent":"teradatadatamoveragentdec21-preview",
