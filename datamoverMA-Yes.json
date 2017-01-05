@@ -79,7 +79,7 @@
       "metadata": {
         "description": "Datamover VM size"
       }
-    },
+    },	
     "subnet1DMID":{
 	  "type":"string",
 	  "metadata":{
@@ -103,7 +103,7 @@
 	  "metadata":{
 	    "description":"StorageAccount type for data disk vhd"
 	  }
-	},		
+	},	
 	"imagePublisher":{
 	 "type":"string",
 	 "metadata":{
@@ -152,7 +152,7 @@
 				"description":"File script url for generating hosts and all file"
 		}	
 	},
-       "teradataTags":{
+	"teradataTags":{
 	 "type":"object",
 	 "metadata":{
 	    "description":"Tags for teradata resources"
@@ -235,7 +235,7 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('clusterAvailabilitySetSettings').name]",
       "location": "[parameters('location')]",
-       "tags": {
+	  "tags": {
           "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "properties": {
@@ -248,9 +248,9 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(variables('publicIPAddressName'),copyIndex())]",
       "location": "[parameters('location')]",	  
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
+	  "tags": {
+        "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },	
 	  "copy": {
         "name": "publicIPCopy",
         "count": "[parameters('dmSystemCount')]"
@@ -268,9 +268,9 @@
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[variables('diagnosticsStorageAccount')]",
 		  "location": "[parameters('location')]",	  
-                   "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
+		  "tags": {
+			"provider": "[toUpper(parameters('teradataTags').provider)]"
+		  },	  
 		  "kind": "Storage",
 		  "sku": {
 			"name": "Standard_LRS"
@@ -283,10 +283,10 @@
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[concat('os',variables('dataStoreStorageAccountArray')[copyIndex()])]",
 		  "location": "[parameters('location')]",
-                   "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
 		  "kind": "Storage",	  
+		  "tags": {
+			"provider": "[toUpper(parameters('teradataTags').provider)]"
+		  },
 		  "copy": {
             "name": "osStorageAccountsCopy",
             "count": "[variables('dataStoreStorageAccountCount')]"
@@ -302,10 +302,10 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('dataStoreStorageAccountArray')[copyIndex()]]",
       "location": "[parameters('location')]",
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
       "kind": "Storage",	  
+	  "tags": {
+     	"provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 	  "copy": {
         "name": "dataStoreStorageAccountsCopy",
         "count": "[variables('dataStoreStorageAccountCount')]"
@@ -321,8 +321,8 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nic1'),copyIndex())]",
       "location": "[parameters('location')]",
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
+	  "tags": {
+        "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "dependsOn": [
        "[concat('Microsoft.Network/publicIPAddresses/',variables('publicIPAddressName'),copyIndex())]"
@@ -354,9 +354,6 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vm'),concat('Master-Agent',add(1,copyIndex())))]",
       "location": "[parameters('location')]",
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
 	  "plan":{
 		 "name":"[parameters('imageSku')]",		 
 		 "product":"[parameters('imageOffer')]",
@@ -372,6 +369,9 @@
       "copy": {
         "name": "vmsCopy",
         "count": "[parameters('dmMasterCount')]"
+      },
+      "tags": {
+       "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "properties": {
         "availabilitySet": {
@@ -455,45 +455,10 @@
       }
     },
 	{
-      "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(variables('vm'),concat('Master-Agent',add(1,copyIndex()))), '/init')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "vmsCopy"
-      ],
-      "copy": {
-        "name": "initExtensionsCopy1",
-        "count": "[parameters('dmMasterCount')]"
-      },
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": "true",
-        "settings": {
-          "fileUris":[
-				"[variables('scriptHostUrltz')]",
-				"[variables('scriptHostUrleco')]"
-		  ],
-        "timestamp": 123456789        
-        },
-		"protectedSettings":{
-		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_config.sh ',parameters('tdcTimeZone'))]"
-		}
-      }
-    }, 	
-	{
       "apiVersion": "[parameters('apiVersions').compute.virtualMachines]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vm'),concat('-agent',add(1,copyIndex(1))))]",
       "location": "[parameters('location')]",
-       "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
 	  "plan":{
 		 "name":"[parameters('imageSkuAgent')]",		 
 		 "product":"[parameters('imageOfferAgent')]",
@@ -509,6 +474,9 @@
       "copy": {
         "name": "vmsCopyAgent",
         "count": "[parameters('dmAgentCount')]"
+      },
+      "tags": {
+       "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "properties": {
         "availabilitySet": {
@@ -556,39 +524,7 @@
           ]
         }
       }
-    },
-   {
-      "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(variables('vm'),concat('-agent',add(1,copyIndex(1)))), '/init')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "vmsCopyAgent"
-      ],
-      "copy": {
-        "name": "initExtensionsCopy",
-        "count": "[parameters('dmAgentCount')]"
-      },
-      "tags": {
-          "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": "true",
-        "settings": {
-          "fileUris":[
-				"[variables('scriptHostUrltz')]",
-				"[variables('scriptHostUrleco')]"
-		  ],
-        "timestamp": 123456789        
-        },
-		"protectedSettings":{
-		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_config.sh ',parameters('tdcTimeZone'))]"
-		}
-      }
-    } 	
+    }
   ],
   "outputs": {   
     
