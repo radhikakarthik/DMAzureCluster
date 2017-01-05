@@ -172,7 +172,13 @@
 		  "metadata":{
 		    "description":"Data mover cluster VM size"
 		  } 
-		}
+		},
+                "teradataTags": {
+				"type": "object",
+				"defaultValue": {
+					"provider": "1C8BE09A-CE46-4BF1-A01B-F570FE1EA1B3"
+				}
+			}
           },
          "variables": {
 		"apiVersions": {
@@ -207,10 +213,14 @@
 		"imageSkuDM":"teradatadatamoverdec21",
 		"imageOfferAgent":"teradatadatamoveragentdec21-preview",
 		"imageSkuAgent":"teradatadatamoveragentdec21",	
+                "vnetID":"[resourceId(parameters('vnetResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+               	"subnet1ID": "[concat(variables('vnetID'),'/subnets/',parameters('vmSubnetName'))]",
                	"s1": "[split(parameters('vmSubnetStartAddress'),'.')]",
                 "dmMasterCount":1,
 		"dmSystemCount":"[add(1,parameters('dmAgentNodeCount'))]",
 		"datamoverAddressCount":"[parameters('dmSystemCount')]",		
+                "dmImageStorageAccountType":"Premium_LRS",
+                "dmSharedStorageAccountType":"Premium_LRS",
 		"dmSubnetStartAddress":"[concat(variables('s1')[0], '.', variables('s1')[1], '.', add(int(variables('s1')[2]), div(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256)), '.', mod(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256))]",
 		"dmagentSubnetStartAddress":"[concat(variables('s1')[0], '.', variables('s1')[1], '.', add(int(variables('s1')[2]), div(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256)), '.', mod(add(int(variables('s1')[3]),add(1,variables('datamoverAddressCount'))),256))]",
 		"dmHostFileParamM":"[concat(' --dm_master ',parameters('dmSystemPrefix'),'MasterAgent',',',variables('dmMasterCount'),',',variables('dmSubnetStartAddress'))]",
@@ -269,9 +279,12 @@
 			  },
 			  "nsgResourceGroup":{
 			    "value":"[parameters('nsgResourceGroup')]"
-			  }
+			  },
+        "teradataTags": {
+		           "value": "[parameters('teradataTags')]"
+				}
 			}
-		  }
+			}
 		},
 		{
 		  "apiVersion": "[variables('apiVersions').resources.deployments]",
@@ -326,6 +339,9 @@
 			  "dmVMSize": {
 				"value": "[parameters('dmClusterVmSize')]"
 			  },
+                           "subnet1DMID":{
+			    "value":"[variables('subnet1ID')]"
+			  },	
 			  "dmSubnetStartAddress":{
 			    "value":"[variables('dmSubnetStartAddress')]"
 			  },
@@ -335,6 +351,9 @@
 			  "imageOffer":{
 			   "value":"[variables('imageOfferDM')]"
 			  },
+			  "subnet1DMID":{
+			    "value":"[variables('subnet1ID')]"
+			  },	
 			  "imageSku":{
 			   "value":"[variables('imageSkuDM')]"
 			  },
@@ -344,6 +363,12 @@
 			  "imageSkuAgent":{
 			    "value":"[variables('imageSkuAgent')]"			  
 			  },
+                          "imageStorageAccountType":{
+				"value": "[variables('dmImageStorageAccountType')]"
+			  },
+                          "sharedStorageAccountType":{
+			   "value": "[variables('dmSharedStorageAccountType')]"
+			  },
 			  "tdcTimeZone":{
 			   "value": "[parameters('tdcTimeZone')]"
 			  },
@@ -352,10 +377,13 @@
 			  },
 			  "scriptUrlInit":{
 				"value":"[variables('baseUrl')]"
-			  }
+			  },
+			  "teradataTags": {
+				"value": "[parameters('teradataTags')]"
+		          }
 			}
-		  }
-		}		
+		}	
+		}	
 	  ],
 	  "outputs": {
 		
