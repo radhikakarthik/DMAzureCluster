@@ -2,6 +2,7 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    
   "location": {
     "value": "westus"
   },
@@ -12,19 +13,22 @@
     "value": "password"
   },
   "adminPassword": {
-    "value": "Cjl666666AZURE"
+    "value": "radKARTHIK1017"
   },
   "vnetResourceGroup": {
-    "value": "ChrisExisting"
+    "value": "teststandalonempp"
   },
   "vnetName": {
-    "value": "chris_vnet"
+    "value": "vnet-sm"
   },
   "vnetNewOrExisting": {
-    "value": "existing"
+    "value": "new"
+  },
+  "vnetAddressSpace": {
+    "value": "10.1.0.0/16"
   },
   "vmSubnetName": {
-    "value": "default"
+    "value": "vmsubnet"
   },
   "vmSubnetAddressSpace": {
     "value": "10.1.0.0/24"
@@ -33,22 +37,31 @@
     "value": "10.1.0.4"
   },
   "existingNSGName": {
-    "value": "UDA_SMJT_NSG"
+    "value": "UDA_ES_NSG"
   },
   "nsgResourceGroup": {
-    "value": "UDA_SMJT_RG"
+    "value": "UDA_ES_RG"
   },
-  "smSystemCount": {
-    "value": 2
+  "dmDBCPassword": {
+    "value": "radKARTHIK1017"
   },
-  "smSiteID": {
-    "value": "AZRTEST"
+  "dmIntPassword": {
+    "value": "radKARTHIK1017"
   },
-  "smAdminPassword": {
-    "value": "admin1"
+  "dmSystemPrefix": {
+    "value": "datamover"
   },
-  "smRESTPassword": {
-    "value": "admin1"
+  "dmAgentNodeCount": {
+    "value": 1
+  },
+  "dmClusterVmSize": {
+    "value": "Standard_DS5_v2"
+  },
+  "tdcTimeZone": {
+    "value": "UTC"
+  },
+  "ntpServerlist": {
+    "value": "0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org"
   }
   }
 }

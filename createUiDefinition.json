@@ -114,12 +114,13 @@
 							]
 						  },
 						  "osPlatform": "Linux", 
-						  "imageReference": {
+                                                    "imageReference": {
 						  "publisher": "teradata",
-						  "offer": "data-mover-preview",
-						  "sku": "datamover151105"
-						  },			  
-						  "count":1						  
+						  "offer": "teradatadatamoverdec21-preview",
+						  "sku": "teradatadatamoverdec21"
+						  },	
+      						  "count":"[add(int(coalesce(steps('dataMoverConfig').dmAgentNodeCount,0)),1)]",
+
 						}
 				]
 			},
@@ -823,13 +824,13 @@
 			"vmSubnetStartAddress": "[steps('generalConfig').virtualNetworkSection.virtualNetwork.subnets.vmsubnet.startAddress]",
 			"existingNSGName": "[steps('generalConfig').existingNSGName]",
 			"nsgResourceGroup": "[steps('generalConfig').existingNSGResourceGroup]",
-	        "dmDBCPassword":"[steps('dataMoverConfig').dmDBCPassword]",	    
-	        "dmIntPassword":"[steps('dataMoverConfig').dmIntPassword]",	
-	        "dmSystemPrefix":"[steps('dataMoverConfig').dmSystemNamePrefix]",
-	        "dmAgentNodeCount":"[int(coalesce(steps('dataMoverConfig').dmAgentNodeCount,0))]",
-	        "dmClusterVmSize":"[steps('dataMoverConfig').dmClusterVmSize]",
-                "tdcTimeZone":"[steps('generalConfig').tdcTimeZone]",
-                "ntpServerlist":"[steps('generalConfig').ntpServerlist]",	  
+	                "dmDBCPassword":"[steps('dataMoverConfig').dmDBCPassword]",	    
+	                "dmIntPassword":"[steps('dataMoverConfig').dmIntPassword]",	
+	                "dmSystemPrefix":"[steps('dataMoverConfig').dmSystemNamePrefix]",
+	                "dmAgentNodeCount":"[int(coalesce(steps('dataMoverConfig').dmAgentNodeCount,0))]",
+	                "dmClusterVmSize":"[steps('dataMoverConfig').dmClusterVmSize]",
+                        "tdcTimeZone":"[steps('generalConfig').tdcTimeZone]",
+                        "ntpServerlist":"[steps('generalConfig').ntpServerlist]"  
 		}
 	}
 }
