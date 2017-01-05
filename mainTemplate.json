@@ -192,15 +192,17 @@
 		"templateUrlVnet": "[concat(variables('baseUrl'),'vnet-',parameters('vnetNewOrExisting'),'.json')]",	
 		"defaultDatamoverUrl_0":"[concat(variables('baseUrl'),'datamoverM-Yes.json')]",
 		"defaultDatamoverUrl_1":"[concat(variables('baseUrl'),'datamoverMA-Yes.json')]",
-		"defaultDatamoverUrl_2":"[concat(variables('baseUrl'),'datamoverMA-Yes'.json')]",
-		"defaultDatamoverUrl_3":"[concat(variables('baseUrl'),'datamoverMA-Yes'.json')]",		
+		"defaultDatamoverUrl_2":"[concat(variables('baseUrl'),'datamoverMA-Yes.json')]",
+		"defaultDatamoverUrl_3":"[concat(variables('baseUrl'),'datamoverMA-Yes.json')]",		
 		"templateUrlDatamover":"[variables(concat('defaultDatamoverUrl_',parameters('dmAgentNodeCount')))]",
                 "imagePublisherDM":"teradata",
 		"imageOfferDM":"teradatadatamoverdec21-preview",
 		"imageSkuDM":"teradatadatamoverdec21",
 		"imageOfferAgent":"teradatadatamoveragentdec21-preview",
 		"imageSkuAgent":"teradatadatamoveragentdec21",	
-		"datamoverAddressCount":"[parameters('vmCountDatabase')]",		
+                "dmMasterCount":1,
+		"dmSystemCount":"[add(1,parameters('dmAgentNodeCount'))]",
+		"datamoverAddressCount":"[parameters('dmSystemCount')]",		
 		"dmSubnetStartAddress":"[concat(variables('s1')[0], '.', variables('s1')[1], '.', add(int(variables('s1')[2]), div(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256)), '.', mod(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256))]",
 		"dmagentSubnetStartAddress":"[concat(variables('s1')[0], '.', variables('s1')[1], '.', add(int(variables('s1')[2]), div(add(int(variables('s1')[3]),variables('datamoverAddressCount')),256)), '.', mod(add(int(variables('s1')[3]),add(1,variables('datamoverAddressCount'))),256))]",
 		"dmHostFileParamM":"[concat(' --dm_master ',parameters('dmSystemPrefix'),'MasterAgent',',',variables('dmMasterCount'),',',variables('dmSubnetStartAddress'))]",
@@ -222,7 +224,7 @@
 		               				
 		"vnet":"[concat('vnet',uniqueString(resourceGroup().id))]",
 		"publicIP":"[concat('publicIP',uniqueString(resourceGroup().id))]",
-		"datamover":"[concat('datamover',uniqueString(resourceGroup().id))]",
+		"datamover":"[concat('datamover',uniqueString(resourceGroup().id))]"
 	  },
 	  "resources": [
 		{
