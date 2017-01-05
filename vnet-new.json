@@ -1,4 +1,5 @@
-chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "apiVersions": {
@@ -55,13 +56,7 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "metadata": {
         "description": "Network Security Resource Group Name"
       }
-    },
-    "teradataTags": {
-      "type": "object",
-      "metadata": {
-        "description": "Tags for teradata resources"
-      }
-    }
+    } 
   },
   "variables": {
     "subnetNsgName": "[parameters('existingNSGName')]",
@@ -74,9 +69,6 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "name": "[parameters('vnetName')]",
       "location": "[parameters('location')]",
       "dependsOn": [],
-      "tags": {
-        "provider": "[toUpper(parameters('teradataTags').provider)]"
-      },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
