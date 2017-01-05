@@ -173,7 +173,7 @@
 		    "description":"Data mover cluster VM size"
 		  } 
 		}
-  },
+          },
          "variables": {
 		"apiVersions": {
 		  "resources": {
@@ -264,26 +264,11 @@
 			  "vmSubnetAddressSpace": {
 				"value": "[parameters('vmSubnetAddressSpace')]"
 			  },
-			  "bynet0SubnetName": {
-				"value": "[parameters('bynet0SubnetName')]"
-			  },
-			  "bynet0SubnetAddressSpace": {
-				"value": "[parameters('bynet0SubnetAddressSpace')]"
-			  },
-			  "bynet1SubnetName": {
-				"value": "[parameters('bynet1SubnetName')]"
-			  },
-			  "bynet1SubnetAddressSpace": {
-				"value": "[parameters('bynet1SubnetAddressSpace')]"
-			  },			 
 			  "existingNSGName":{
 			    "value":"[parameters('existingNSGName')]"
 			  },
 			  "nsgResourceGroup":{
 			    "value":"[parameters('nsgResourceGroup')]"
-			  },
-			  "teradataTags":{
-			    "value":"[parameters('teradataTags')]"
 			  }
 			}
 		  }
@@ -318,7 +303,7 @@
 			    "value":"[parameters('dmSshPublicKey')]"
 			  },
 			  "dmAuthenticationType":{
-				"value":"[parameters('dmAuthenticationType')]"
+				"value":"[parameters('authenticationType')]"
 			  },
 			  "dmDBCPassword":{
 				"value":"[parameters('dmDBCPassword')]"
@@ -341,9 +326,6 @@
 			  "dmVMSize": {
 				"value": "[parameters('dmClusterVmSize')]"
 			  },
-			  "subnet1DMID":{
-			    "value":"[variables('subnet1ID')]"
-			  },			
 			  "dmSubnetStartAddress":{
 			    "value":"[variables('dmSubnetStartAddress')]"
 			  },
@@ -362,12 +344,6 @@
 			  "imageSkuAgent":{
 			    "value":"[variables('imageSkuAgent')]"			  
 			  },
-			  "imageStorageAccountType":{
-				"value": "[variables('dmImageStorageAccountType')]"
-			  },
-			  "sharedStorageAccountType":{
-			   "value": "[variables('dmSharedStorageAccountType')]"
-			  },
 			  "tdcTimeZone":{
 			   "value": "[parameters('tdcTimeZone')]"
 			  },
@@ -376,9 +352,6 @@
 			  },
 			  "scriptUrlInit":{
 				"value":"[variables('baseUrl')]"
-			  },
-			  "teradataTags":{
-			    "value":"[parameters('teradataTags')]"
 			  }
 			}
 		  }
