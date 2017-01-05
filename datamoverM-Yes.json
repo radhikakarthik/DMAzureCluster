@@ -79,12 +79,30 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
         "description": "Datamover VM size"
       }
     },	
+    "subnet1DMID":{
+	  "type":"string",
+	  "metadata":{
+		"description":"Datamover Subnet ID"	  
+	  }
+	},	
 	"dmSubnetStartAddress":{
 	 "type":"string",
 	 "metadata":{
 	   "description":"Datmover subnet start address"
 	 }
 	},
+        "imageStorageAccountType": {
+      "type": "string",     
+      "metadata": {
+        "description": "Storage Account type for OS vhd"
+      }      
+    },	
+	"sharedStorageAccountType":{
+	  "type":"string",
+	  "metadata":{
+	    "description":"StorageAccount type for data disk vhd"
+	  }
+	},	
 	"imagePublisher":{
 	 "type":"string",
 	 "metadata":{
@@ -132,7 +150,13 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
 		"metadata":{
 			"description":"File script url for generating hosts and all file"
 		}	
-	}	
+	},
+	"teradataTags":{
+	 "type":"object",
+	 "metadata":{
+	    "description":"Tags for teradata resources"
+	 }	
+	}		
   },
   "variables": {      	
     "nic1": "[concat(parameters('dmSystemPrefix'),'-','nic1')]",   
@@ -210,6 +234,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('clusterAvailabilitySetSettings').name]",
       "location": "[parameters('location')]",
+      "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "properties": {
         "platformFaultDomainCount": "[variables('clusterAvailabilitySetSettings').faultDomainCount]",
         "platformUpdateDomainCount": "[variables('clusterAvailabilitySetSettings').updateDomainCount]"
@@ -220,6 +247,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[parameters('location')]",	  
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",		
         "dnsSettings": {
@@ -233,6 +263,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[variables('diagnosticsStorageAccount')]",
 		  "location": "[parameters('location')]",	  
+                   "tags": {
+                      "provider": "[toUpper(parameters('teradataTags').provider)]"
+                   },
 		  "kind": "Storage",
 		  "sku": {
 			"name": "Standard_LRS"
@@ -245,6 +278,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[concat('os',variables('dataStoreStorageAccountArray')[copyIndex()])]",
 		  "location": "[parameters('location')]",
+                   "tags": {
+                   "provider": "[toUpper(parameters('teradataTags').provider)]"
+                   },
 		  "kind": "Storage",	  
 		  "copy": {
             "name": "osStorageAccountsCopy",
@@ -261,6 +297,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('dataStoreStorageAccountArray')[copyIndex()]]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "kind": "Storage",	  
 	  "copy": {
         "name": "dataStoreStorageAccountsCopy",
@@ -277,6 +316,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nic1'),copyIndex())]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "dependsOn": [
        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
       ],
@@ -307,6 +349,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vm'),concat('Master-Agent',add(1,copyIndex())))]",
       "location": "[parameters('location')]",
+        "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 	  "plan":{
 		 "name":"[parameters('imageSku')]",		 
 		 "product":"[parameters('imageOffer')]",
@@ -414,6 +459,9 @@ chema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTempla
       "copy": {
         "name": "initExtensionsCopy",
         "count": "[parameters('dmSystemCount')]"
+      },
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",

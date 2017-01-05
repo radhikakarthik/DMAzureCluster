@@ -79,7 +79,31 @@
       "metadata": {
         "description": "Datamover VM size"
       }
+    },
+    "subnet1DMID":{
+	  "type":"string",
+	  "metadata":{
+		"description":"Datamover Subnet ID"	  
+	  }
+	},	
+	"dmSubnetStartAddress":{
+	 "type":"string",
+	 "metadata":{
+	   "description":"Datmover subnet start address"
+	 }
+	},
+	"imageStorageAccountType": {
+      "type": "string",     
+      "metadata": {
+        "description": "Storage Account type for OS vhd"
+      }      
     },	
+	"sharedStorageAccountType":{
+	  "type":"string",
+	  "metadata":{
+	    "description":"StorageAccount type for data disk vhd"
+	  }
+	},		
 	"imagePublisher":{
 	 "type":"string",
 	 "metadata":{
@@ -127,7 +151,13 @@
 		"metadata":{
 				"description":"File script url for generating hosts and all file"
 		}	
-	}
+	},
+       "teradataTags":{
+	 "type":"object",
+	 "metadata":{
+	    "description":"Tags for teradata resources"
+	 }	
+	}	
   },
   "variables": {      	
     "nic1": "[concat(parameters('dmSystemPrefix'),'-','nic1')]",   
@@ -205,6 +235,9 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('clusterAvailabilitySetSettings').name]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "properties": {
         "platformFaultDomainCount": "[variables('clusterAvailabilitySetSettings').faultDomainCount]",
         "platformUpdateDomainCount": "[variables('clusterAvailabilitySetSettings').updateDomainCount]"
@@ -215,6 +248,9 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(variables('publicIPAddressName'),copyIndex())]",
       "location": "[parameters('location')]",	  
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 	  "copy": {
         "name": "publicIPCopy",
         "count": "[parameters('dmSystemCount')]"
@@ -232,6 +268,9 @@
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[variables('diagnosticsStorageAccount')]",
 		  "location": "[parameters('location')]",	  
+                   "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 		  "kind": "Storage",
 		  "sku": {
 			"name": "Standard_LRS"
@@ -244,6 +283,9 @@
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[concat('os',variables('dataStoreStorageAccountArray')[copyIndex()])]",
 		  "location": "[parameters('location')]",
+                   "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 		  "kind": "Storage",	  
 		  "copy": {
             "name": "osStorageAccountsCopy",
@@ -260,6 +302,9 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('dataStoreStorageAccountArray')[copyIndex()]]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "kind": "Storage",	  
 	  "copy": {
         "name": "dataStoreStorageAccountsCopy",
@@ -276,6 +321,9 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nic1'),copyIndex())]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "dependsOn": [
        "[concat('Microsoft.Network/publicIPAddresses/',variables('publicIPAddressName'),copyIndex())]"
       ],
@@ -306,6 +354,9 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vm'),concat('Master-Agent',add(1,copyIndex())))]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 	  "plan":{
 		 "name":"[parameters('imageSku')]",		 
 		 "product":"[parameters('imageOffer')]",
@@ -415,6 +466,9 @@
         "name": "initExtensionsCopy1",
         "count": "[parameters('dmMasterCount')]"
       },
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
@@ -437,6 +491,9 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vm'),concat('-agent',add(1,copyIndex(1))))]",
       "location": "[parameters('location')]",
+       "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
 	  "plan":{
 		 "name":"[parameters('imageSkuAgent')]",		 
 		 "product":"[parameters('imageOfferAgent')]",
@@ -511,6 +568,9 @@
       "copy": {
         "name": "initExtensionsCopy",
         "count": "[parameters('dmAgentCount')]"
+      },
+      "tags": {
+          "provider": "[toUpper(parameters('teradataTags').provider)]"
       },
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
