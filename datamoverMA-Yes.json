@@ -525,6 +525,37 @@
         }
       }
     }
+      {
+      "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(concat(variables('vm'),concat('-agent',add(1,copyIndex(1)))), '/init')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "vmsCopyAgent"
+      ],
+      "copy": {
+        "name": "initExtensionsCopy",
+        "count": "[parameters('dmAgentCount')]"
+      },
+	  "tags": {
+        "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": "true",
+        "settings": {
+          "fileUris":[
+				"[variables('scriptHostUrltz')]",
+				"[variables('scriptHostUrleco')]"
+		  ]      
+        },
+		"protectedSettings":{
+		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_config.sh ',parameters('tdcTimeZone'))]"
+		}
+      }
+    } 	
   ],
   "outputs": {   
     

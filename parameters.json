@@ -2,8 +2,7 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    
-  "location": {
+   "location": {
     "value": "westus"
   },
   "adminUsername": {
@@ -13,10 +12,13 @@
     "value": "password"
   },
   "adminPassword": {
-    "value": "radKARTHIK1017"
+    "value": "dataMOVER487"
+  },
+  "dmPassword": {
+    "value": "dataMOVER487"
   },
   "vnetResourceGroup": {
-    "value": "teststandalonempp"
+    "value": "testdatamover"
   },
   "vnetName": {
     "value": "vnet-sm"
@@ -25,16 +27,16 @@
     "value": "new"
   },
   "vnetAddressSpace": {
-    "value": "10.1.0.0/16"
+    "value": "10.7.0.0/16"
   },
   "vmSubnetName": {
     "value": "vmsubnet"
   },
   "vmSubnetAddressSpace": {
-    "value": "10.1.0.0/24"
+    "value": "10.7.0.0/24"
   },
   "vmSubnetStartAddress": {
-    "value": "10.1.0.4"
+    "value": "10.7.0.4"
   },
   "existingNSGName": {
     "value": "UDA_ES_NSG"
@@ -43,16 +45,16 @@
     "value": "UDA_ES_RG"
   },
   "dmDBCPassword": {
-    "value": "radKARTHIK1017"
+    "value": "dataMOVER487"
   },
   "dmIntPassword": {
-    "value": "radKARTHIK1017"
+    "value": "dataMOVER487"
   },
   "dmSystemPrefix": {
     "value": "datamover"
   },
   "dmAgentNodeCount": {
-    "value": 1
+    "value": 3
   },
   "dmClusterVmSize": {
     "value": "Standard_DS5_v2"
@@ -62,6 +64,6 @@
   },
   "ntpServerlist": {
     "value": "0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org"
-  }
-  }
+  }    
+ }
 }
