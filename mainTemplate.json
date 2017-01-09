@@ -233,11 +233,12 @@
         "dmHostFileParam_Yes":"[variables(concat('dmHostFileParam_',parameters('dmAgentNodeCount')))]"	,
         
         "dmAnsible_Yes":"[concat('  dm_dbc_password=',parameters('dmDBCPassword'),' ntp_server_list=',parameters('ntpServerlist'),' dm_datamover_password=',parameters('dmIntPassword'))]",
-        "dmAnsible_No":"",
-        
-		"vnet":"[concat('vnet',uniqueString(resourceGroup().id))]",
-		"publicIP":"[concat('publicIP',uniqueString(resourceGroup().id))]",
-		"datamover":"[concat('datamover',uniqueString(resourceGroup().id))]"
+        "generateHostFileParam":"[variables('dmHostFileParam_Yes')]",
+        "ansibleparam":"[concat('cloud_env=aws ,' ntp_server_list=',parameters('ntpServerlist'),' variables('dmAnsible_Yes'))]",
+ 
+	"vnet":"[concat('vnet',uniqueString(resourceGroup().id))]",
+	"publicIP":"[concat('publicIP',uniqueString(resourceGroup().id))]",
+	"datamover":"[concat('datamover',uniqueString(resourceGroup().id))]"
 	  },
 	  "resources": [
 		{
@@ -377,6 +378,12 @@
 			  },
 			  "scriptUrlInit":{
 				"value":"[variables('baseUrl')]"
+			  },
+                           "generateHostFileParam":{
+			    "value":"[variables('generateHostFileParam')]"
+			  },
+			  "ansibleparam":{
+				"value":"[variables('ansibleparam')]"
 			  },
 			  "teradataTags": {
 				"value": "[parameters('teradataTags')]"

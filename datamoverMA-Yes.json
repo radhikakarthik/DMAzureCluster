@@ -226,7 +226,8 @@
     "diagnosticsStorageAccount": "[concat('dmdiag',uniqueString(resourceGroup().id,'d'))]",	
 	"s1": "[split(parameters('dmSubnetStartAddress'),'.')]",
 	"scriptHostUrltz":"[concat(parameters('scriptUrlInit'),'tdc-timezone.py')]",
-	"scriptHostUrleco":"[concat(parameters('scriptUrlInit'),'eco_config.sh')]",
+	"scriptHostUrleco":"[concat(parameters('scriptUrlInit'),'eco_ansi.sh')]",
+        "scriptHostUrlecoConfig":"[concat(parameters('scriptUrlInit'),'eco_config.sh')]",
 	"publicIPAddressType":"Static"	     	
   },
   "resources": [ 
@@ -548,7 +549,7 @@
         "settings": {
           "fileUris":[
 				"[variables('scriptHostUrltz')]",
-				"[variables('scriptHostUrleco')]"
+                                "[variables('scriptHostUrlecoConfig')]"
 		  ]      
         },
     "protectedSettings":{
@@ -579,7 +580,7 @@
         "settings": {
           "fileUris":[
 				"[variables('scriptHostUrltz')]",
-				"[variables('scriptHostUrleco')]"
+				"[variables('scriptHostUrlecoConfig')]"
 		  ]	  
         },
 	 "protectedSettings":{
