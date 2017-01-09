@@ -232,7 +232,7 @@
         "dmHostFileParam_No":"",
         "dmHostFileParam_Yes":"[variables(concat('dmHostFileParam_',parameters('dmAgentNodeCount')))]"	,
         
-        "dmAnsible_Yes":"[concat('  dm_dbc_password=',parameters('dmDBCPassword'),' dm_datamover_password=',parameters('dmIntPassword'))]",
+        "dmAnsible_Yes":"[concat('  dm_dbc_password=',parameters('dmDBCPassword'),' ntp_server_list=',parameters('ntpServerlist'),' dm_datamover_password=',parameters('dmIntPassword'))]",
         "dmAnsible_No":"",
         
 		"vnet":"[concat('vnet',uniqueString(resourceGroup().id))]",

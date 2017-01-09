@@ -524,8 +524,8 @@
           ]
         }
       }
-    }
-      {
+    },
+         {
       "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(concat(variables('vm'),concat('-agent',add(1,copyIndex(1)))), '/init')]",
@@ -551,11 +551,42 @@
 				"[variables('scriptHostUrleco')]"
 		  ]      
         },
-		"protectedSettings":{
+    "protectedSettings":{
 		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_config.sh ',parameters('tdcTimeZone'))]"
 		}
       }
-    } 	
+    } ,
+      {
+      "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(concat(variables('vm'),concat('Master-Agent',add(1,copyIndex()))), '/init')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "vmsCopy"
+      ],
+      "copy": {
+        "name": "initExtensionsCopy",
+        "count": "[parameters('dmSystemCount')]"
+      },
+	  "tags": {
+        "provider": "[toUpper(parameters('teradataTags').provider)]"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": "true",
+        "settings": {
+          "fileUris":[
+				"[variables('scriptHostUrltz')]",
+				"[variables('scriptHostUrleco')]"
+		  ]	  
+        },
+	 "protectedSettings":{
+		  "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_ansi.sh ',parameters('tdcTimeZone'),' \"',parameters('generateHostFileParam'),'\"',' \"',parameters('ansibleparam'))]"
+		}
+      }
+    }		
   ],
   "outputs": {   
     
