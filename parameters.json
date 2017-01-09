@@ -21,7 +21,7 @@
     "value": "testdatamover"
   },
   "vnetName": {
-    "value": "vnet-sm"
+    "value": "vnet-dm"
   },
   "vnetNewOrExisting": {
     "value": "new"
