@@ -114,13 +114,12 @@
 							]
 						  },
 						  "osPlatform": "Linux", 
-                                                    "imageReference": {
+                        "imageReference": {
 						  "publisher": "teradata",
 						  "offer": "teradatadatamoverdec21-preview",
 						  "sku": "teradatadatamoverdec21"
 						  },	
-      						  "count":"[add(int(coalesce(steps('dataMoverConfig').dmAgentNodeCount,0)),1)]",
-
+      						  "count":"[add(int(coalesce(steps('dataMoverConfig').dmAgentNodeCount,0)),1)]"
 						}
 				]
 			},
