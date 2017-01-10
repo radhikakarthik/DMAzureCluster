@@ -241,7 +241,6 @@
 	"s1": "[split(parameters('dmSubnetStartAddress'),'.')]",
 	"scriptHostUrltz":"[concat(parameters('scriptUrlInit'),'tdc-timezone.py')]",
 	"scriptHostUrleco":"[concat(parameters('scriptUrlInit'),'eco_ansi.sh')]",
-        "scriptHostUrlecoConfig":"[concat(parameters('scriptUrlInit'),'eco_config.sh')]",
 	"publicIPAddressType":"Static"	     	
   },
   "resources": [ 
@@ -472,7 +471,7 @@
 	{
       "apiVersion": "[parameters('apiVersions').compute.virtualMachines]",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vm'),concat('-agent',add(1,copyIndex(1))))]",
+      "name": "[concat(variables('vm'),concat('-Agent',add(1,copyIndex(1))))]",
       "location": "[parameters('location')]",
 	  "plan":{
 		 "name":"[parameters('imageSkuAgent')]",		 
@@ -562,12 +561,11 @@
         "autoUpgradeMinorVersion": "true",
         "settings": {
           "fileUris":[
-				"[variables('scriptHostUrltz')]",
-                                "[variables('scriptHostUrlecoConfig')]"
+				"[variables('scriptHostUrltz')]"
 		  ]      
         },
     "protectedSettings":{
-		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sh eco_config.sh ',parameters('tdcTimeZone'))]"
+		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' &&  sudo /usr/local/bin/tdc-ecossh --enable ')]"
 		}
       }
     } ,
