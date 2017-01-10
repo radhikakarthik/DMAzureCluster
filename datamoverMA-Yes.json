@@ -574,7 +574,7 @@
       {
       "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(variables('vm'),concat('Master-Agent',add(1,copyIndex()))), '/init')]",
+      "name": "[concat(concat(variables('vm'),concat('Master-Agent',copyIndex())), '/init')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "vmsCopy"
