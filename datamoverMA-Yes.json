@@ -581,7 +581,7 @@
       ],
       "copy": {
         "name": "initExtensionsCopy",
-        "count": "[parameters('dmSystemCount')]"
+        "count": "[parameters('dmMasterCount')]"
       },
 	  "tags": {
         "provider": "[toUpper(parameters('teradataTags').provider)]"
