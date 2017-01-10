@@ -543,7 +543,7 @@
          {
       "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(variables('vm'),concat('-agent',add(1,copyIndex(1)))), '/init')]",
+      "name": "[concat(concat(variables('vm'),concat('-Agent',add(1,copyIndex(1)))), '/init')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "vmsCopyAgent"
@@ -574,7 +574,7 @@
       {
       "apiVersion": "[parameters('apiVersions').compute.virtualMachineExtensions]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(variables('vm'),concat('Master-Agent',copyIndex())), '/init')]",
+      "name": "[concat(concat(variables('vm'),concat('Master-Agent',add(1,copyIndex()))), '/init')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "vmsCopy"
@@ -594,7 +594,7 @@
         "settings": {
           "fileUris":[
 				"[variables('scriptHostUrltz')]",
-				"[variables('scriptHostUrlecoConfig')]"
+				"[variables('scriptHostUrleco')]"
 		  ]	  
         },
 	 "protectedSettings":{
