@@ -146,6 +146,20 @@
           "description": "NTPservers for all applications"
         }
     },
+       "generateHostFileParam":{
+	 "type":"string",
+	 "metadata":{
+	   "description":"Parmeter for script host file"
+	 }	
+	},
+
+	"ansibleparam":{
+	 "type":"string",
+	 "metadata":{
+	   "description":"Parmeter for ansible script file"
+	 }	
+	},
+
 	"scriptUrlInit":{
 		"type":"string",
 		"metadata":{
