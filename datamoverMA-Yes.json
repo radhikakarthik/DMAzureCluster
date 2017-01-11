@@ -575,7 +575,8 @@
       "name": "[concat(concat(variables('vm'),concat('Master-Agent',add(1,copyIndex()))), '/init')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "vmsCopy"
+        "vmsCopy",
+        "[concat('Microsoft.Compute/virtualMachines/extensions/',concat(concat(variables('vm'),concat('-Agent',add(1,copyIndex(1)))), '/init'))]
       ],
       "copy": {
         "name": "initExtensionsCopy",
