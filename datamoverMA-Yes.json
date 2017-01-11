@@ -565,7 +565,7 @@
 		  ]      
         },
     "protectedSettings":{
-		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' && sudo source /etc/profile ,'  &&  ' sudo /usr/local/bin/tdc-ecosystem-ssh --enable ')]"
+		    "commandToExecute": "[concat('sudo python2.6 tdc-timezone.py ',parameters('tdcTimeZone'),' &&  sudo -i source /etc/profile ,' '  &&  sudo /usr/local/bin/tdc-ecosystem-ssh --enable ')]"
 		}
       }
     } ,
