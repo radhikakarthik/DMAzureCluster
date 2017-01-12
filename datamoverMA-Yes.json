@@ -576,6 +576,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "vmsCopy",
+        "[concat(variables('vm'),concat('-Agent',add(1,copyIndex(1))))]",
         "[concat('Microsoft.Compute/virtualMachines/extensions/',concat(concat(variables('vm'),concat('-Agent',add(1,copyIndex(1)))), '/init'))]"
       ],
       "copy": {
