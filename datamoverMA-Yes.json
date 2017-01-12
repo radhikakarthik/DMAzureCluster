@@ -548,7 +548,7 @@
         "vmsCopyAgent"
       ],
       "copy": {
-        "name": "initExtensionsCopy",
+        "name": "initAgentCopy",
         "count": "[parameters('dmAgentCount')]"
       },
 	  "tags": {
@@ -576,10 +576,10 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "vmsCopy",
-        "[concat('Microsoft.Compute/virtualMachines/’,concat(concat(variables('vm'),concat('-Agent',add(1,copyIndex(1)))),’/extensions/init'))]"
+        "initAgentCopy"
       ],
       "copy": {
-        "name": "initExtensionsCopy",
+        "name": "initMasterCopy",
         "count": "[parameters('dmMasterCount')]"
       },
 	  "tags": {
