@@ -149,7 +149,7 @@
 									"subnets": "Data Mover VMs are expected to be deployed onto an existing subnet with Teradata/application VMs."
 								},
 								"defaultValue": {
-									"name": "vnet-sm",
+									"name": "vnet-dm",
 									"addressPrefixSize": "/16"
 								},
 								"options": {
