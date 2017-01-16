@@ -340,9 +340,6 @@
 			  "dmVMSize": {
 				"value": "[parameters('dmClusterVmSize')]"
 			  },
-                           "subnet1DMID":{
-			    "value":"[variables('subnet1ID')]"
-			  },	
 			  "dmSubnetStartAddress":{
 			    "value":"[variables('dmSubnetStartAddress')]"
 			  },
